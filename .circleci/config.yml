@@ -32,7 +32,7 @@ jobs:
       # "greet" is a sample command packaged with this orb config.
       # This sample integration test will run as long as the greet command exists. Once you remove the greet command you should remove this line.
       # Push new changes first, before adding new tests to your config.
-      - dundermifflin-orbs-circleci/greet
+      #- dundermifflin-orbs-circleci/greet
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -56,18 +56,18 @@ workflows:
           requires:
             - orb-tools/lint
             - orb-tools/pack
-            - bats/run
-            - shellcheck/check
+            #- bats/run
+            #- shellcheck/check
       # Publish development version(s) of the orb.
       - orb-tools/publish-dev:
           orb-name: personal-orbs/dundermifflin-orbs-circleci
-          context: <publishing-context> # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
+          context: orb-publishing # A restricted context containing your private publishing credentials. Will only execute if approved by an authorized user.
           requires: [hold-for-dev-publish]
       # Trigger an integration workflow to test the
       # dev:${CIRCLE_SHA1:0:7} version of your orb
       - orb-tools/trigger-integration-tests-workflow:
           name: trigger-integration-dev
-          context: <publishing-context>
+          context: orb-publishing
           requires:
             - orb-tools/publish-dev
 
@@ -88,7 +88,7 @@ workflows:
       # e.g. [semver:patch] will cause a patch version to be published.
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: personal-orbs/dundermifflin-orbs-circleci
-          context: <publishing-context>
+          context: orb_publishing
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: false
