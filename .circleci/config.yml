@@ -42,12 +42,12 @@ workflows:
     jobs:
       - orb-tools/lint # Lint Yaml files
       - orb-tools/pack # Pack orb source
-      - shellcheck/check:
-          dir: ./src/scripts
-          exclude: SC2148
+      #- shellcheck/check:
+      #    dir: ./src/scripts
+      #    exclude: SC2148
       # optional: Run BATS tests against your scripts
-      - bats/run:
-          path: ./src/tests
+      #- bats/run:
+      #    path: ./src/tests
       # If you accept building open source forks, protect your secrects behind a restricted context.
       # A job containing restricted context (which holds your orb publishing credentials) may only be accessed by a user with proper permissions.
       # An open source user may begin a pipeline with a PR, and once the pipeline is approved by an authorized user at this point, the pipeline will continue with the proper context permissions.
@@ -88,7 +88,7 @@ workflows:
       # e.g. [semver:patch] will cause a patch version to be published.
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: personal-orbs/dundermifflin-orbs-circleci
-          context: orb_publishing
+          context: orb-publishing
           add-pr-comment: false
           fail-if-semver-not-indicated: true
           publish-version-tag: false
@@ -99,3 +99,4 @@ workflows:
               only: 
                 - master
                 - main
+                - alpha
